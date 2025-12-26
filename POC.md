@@ -1,33 +1,33 @@
 1. Access the administrative backend and authenticate using valid administrator credentials.
 
-![image-20251226203154861](D:\image\image-20251226203154861.png)
+<img width="1871" height="941" alt="image" src="https://github.com/user-attachments/assets/dde683e7-0feb-4489-85c6-159e670e92cb" />
 
 2.  After successful authentication, navigate to the backend dashboard to confirm normal access.
 
-![image-20251226203238667](D:\image\image-20251226203238667.png)
+<img width="1891" height="962" alt="image" src="https://github.com/user-attachments/assets/59984275-519c-4745-b0ee-c9d22aeb582f" />
 
 3. Select the **CRUD Code Generation** feature from the backend management interface.
 
-![image-20251226203622229](D:\image\image-20251226203622229.png)
+<img width="1907" height="958" alt="image" src="https://github.com/user-attachments/assets/0403c850-2c62-42b0-97de-264f15100ca7" />
 
 4. Create a new backend CRUD configuration:
    - Specify arbitrary values for the **database table name** and **table description**.
    - Select **Primary Key** from the common fields section and move it to the selected fields panel.
    - Choose any required basic fields and move them to the selected fields panel accordingly.
 
-![image-20251226212436404](D:\image\image-20251226212436404.png)
+<img width="1911" height="961" alt="image" src="https://github.com/user-attachments/assets/3672dff6-a0dc-4aa9-9097-ca5c184534f7" />
 
 5. Click **Generate CRUD Code**.
     While generating the code, intercept the request using Burp Suite and identify the vulnerable endpoint:`/admin/ajax/terminal`
 
    Capture the corresponding HTTP request body.
 
-![image-20251226212539917](D:\image\image-20251226212539917.png)
+<img width="1893" height="906" alt="image" src="https://github.com/user-attachments/assets/e3cced4b-76a3-454a-9606-702ecfc50e19" />
 
 6. Modify the intercepted request by injecting a malicious payload into the vulnerable parameter to trigger OS command execution.
     For example, attempting to execute the `ifconfig` command successfully returns the server’s network interface and IP address information, confirming remote command execution.
 
-![image-20251226212806310](D:\image\image-20251226212806310.png)
+<img width="1432" height="802" alt="image" src="https://github.com/user-attachments/assets/bc1c14a0-3243-4ccd-b734-01a94c19c55f" />
 
 request：
 
@@ -75,5 +75,6 @@ data: {"data":"exitCode: 0","uuid":"34f8040f-8de8-4e3a-ab79-caf82f6d99a2","exten
 data: {"data":"command-exec-success","uuid":"34f8040f-8de8-4e3a-ab79-caf82f6d99a2","extend":".\/src\/views\/backend\/hello;ifconfig;","key":"npx.prettier"}
 
 data: {"data":"command-exec-completed","uuid":"34f8040f-8de8-4e3a-ab79-caf82f6d99a2","extend":".\/src\/views\/backend\/hello;ifconfig;","key":"npx.prettier"}
+
 
 ```
